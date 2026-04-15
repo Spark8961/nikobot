@@ -2,10 +2,11 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Collection } from "discord.js";
+import { BotClient } from "../types/botClient.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export default loadCommands = async (client) => {
+// TODO: Test Working
+const loadCommands = async (client: BotClient) => {
     client.commands = new Collection();
     const commandFiles = fs.readdirSync(path.join(__dirname, "../commands")).filter((file) => file.endsWith(".js"));
 
@@ -14,3 +15,5 @@ export default loadCommands = async (client) => {
         client.commands.set(command.name, command);
     }
 };
+
+export default loadCommands;

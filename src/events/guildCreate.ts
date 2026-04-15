@@ -1,6 +1,7 @@
+import { Event } from "../types/event.js";
 import db from "../db.js";
 
-export default {
+const event: Event<"guildCreate"> = {
     name: "guildCreate",
     once: false,
     execute: async (guild) => {
@@ -13,3 +14,5 @@ export default {
         }
     },
 };
+
+export default event;

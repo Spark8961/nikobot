@@ -1,6 +1,7 @@
+import { Event } from "../types/event.js";
 import db from "../db.js";
 
-export default {
+const event: Event<"clientReady"> = {
     name: "clientReady",
     once: true,
     execute: async (client) => {
@@ -15,3 +16,5 @@ export default {
         console.log(`Logged in as ${client.user.tag}`);
     },
 };
+
+export default event;

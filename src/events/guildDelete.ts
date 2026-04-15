@@ -1,7 +1,8 @@
+import { Event } from "../types/event.js";
 import db from "../db.js";
 
-export default {
-    name: "guilDelete",
+const event: Event<"guildDelete"> = {
+    name: "guildDelete",
     once: false,
     execute: async (guild) => {
         const { error } = await db.from("guilds").delete().eq("guild_id", guild.id);
@@ -11,3 +12,5 @@ export default {
         }
     },
 };
+
+export default event;
