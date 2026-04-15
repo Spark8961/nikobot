@@ -9,13 +9,13 @@ const client = new BotClient({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
 
-eventHandler(client);
-loadCommands(client);
+await eventHandler(client);
+await loadCommands(client);
 
 const token = process.env.DISCORD_TOKEN;
 
 if (!token) {
     throw new Error("Missing Discord Token.");
 }
-
+//TODO: Ad DB connection check before bot starts.
 client.login(token);

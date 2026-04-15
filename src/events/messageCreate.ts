@@ -1,7 +1,7 @@
+import { BotClient } from "../types/botClient.js";
 import { Event } from "../types/event.js";
-// import db from "../db.js";
+import { logger } from "../utils/logger.js";
 
-// TODO: Write Handler
 const event: Event<"messageCreate"> = {
     name: "messageCreate",
     once: false,
@@ -11,7 +11,19 @@ const event: Event<"messageCreate"> = {
         const prefix = "!";
         if (!message.content.startsWith(prefix)) return;
 
-        if (message.content === "hi") message.reply("bye");
+        const args = message.content.toLowerCase().slice(prefix.length).split(/\s+/);
+        const commandName = args.shift();
+        if (!commandName) return;
+
+        const client = message.client as BotClient;
+        const command = client.commands.get(commandName);
+        if (!command) return;
+
+        try {
+            await command.execute(message, args);
+        } catch (err) {
+            logger.error({ err, command: command.name }, "Command failed");
+        }
     },
 };
 
